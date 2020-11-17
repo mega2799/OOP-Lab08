@@ -5,14 +5,29 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.EOFException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.PrintStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Random;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
+// import jdk.internal.jline.internal.InputStreamReader;
 
 /**
  * This class is a simple application that writes a random number on a file.
@@ -35,25 +50,36 @@ public class BadIOGUI {
      * 
      */
     public BadIOGUI() {
-        final JPanel canvas = new JPanel();
-        canvas.setLayout(new BorderLayout());
+        final JPanel windows = new JPanel();
+        windows.setLayout(new BoxLayout(windows, BoxLayout.Y_AXIS));
         final JButton write = new JButton("Write on file");
-        canvas.add(write, BorderLayout.CENTER);
-        frame.setContentPane(canvas);
+        windows.add(write, BorderLayout.CENTER);
+        final JButton read = new JButton("Read the file");
+        windows.add(read, BorderLayout.CENTER);
+        frame.setContentPane(windows);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        /*
+  /*
+         * 
          * Handlers
          */
+       /* write.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+               try (OutputStream out = new FileOutputStream(PATH)) {
+                	final DataOutputStream stream = new DataOutputStream(out);
+                	stream.writeInt(rng.nextInt());
+                 } catch (FileNotFoundException e1) {
+                    JOptionPane.showMessageDialog(frame, e1, "Error", JOptionPane.ERROR_MESSAGE);
+                    e1.printStackTrace();
+                } catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+            }
+        });*/
         write.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
-                /*
-                 * This would be VERY BAD in a real application.
-                 * 
-                 * This makes the Event Dispatch Thread (EDT) work on an I/O
-                 * operation. I/O operations may take a long time, during which
-                 * your UI becomes completely unresponsive.
-                 */
                 try (PrintStream ps = new PrintStream(PATH)) {
                     ps.print(rng.nextInt());
                 } catch (FileNotFoundException e1) {
@@ -61,8 +87,37 @@ public class BadIOGUI {
                     e1.printStackTrace();
                 }
             }
+        });/*
+     read.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                try (InputStream in = new FileInputStream(PATH)){
+                	DataInputStream data = new DataInputStream(in);
+                	System.out.println(data.readInt());
+                }catch (FileNotFoundException e1) {
+                    JOptionPane.showMessageDialog(frame, e1, "Error", JOptionPane.ERROR_MESSAGE);
+                    e1.printStackTrace();
+                } catch (IOException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+            }
+        });*/
+read.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                try (InputStream in = new FileInputStream(PATH)){
+                	DataInputStream data = new DataInputStream(in);
+                	System.out.println(data.readLine());
+                }catch (FileNotFoundException e1) {
+                    JOptionPane.showMessageDialog(frame, e1, "Error", JOptionPane.ERROR_MESSAGE);
+                    e1.printStackTrace();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+            }
         });
-    }
+ }
 
     private void display() {
         /*
