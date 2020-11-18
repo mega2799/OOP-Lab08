@@ -87,7 +87,8 @@ public class BadIOGUI {
                     e1.printStackTrace();
                 }
             }
-        });/*
+        });
+        /*
      read.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
@@ -106,8 +107,8 @@ public class BadIOGUI {
 read.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
-                try (InputStream in = new FileInputStream(PATH)){
-                	DataInputStream data = new DataInputStream(in);
+                try (final InputStream in = new FileInputStream(PATH)){
+                	final DataInputStream data = new DataInputStream(in);
                 	System.out.println(data.readLine());
                 }catch (FileNotFoundException e1) {
                     JOptionPane.showMessageDialog(frame, e1, "Error", JOptionPane.ERROR_MESSAGE);
