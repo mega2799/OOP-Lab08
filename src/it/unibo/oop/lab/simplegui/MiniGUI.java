@@ -47,14 +47,7 @@ public class MiniGUI {
         /*
          * Handlers
          */
-        write.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(final ActionEvent e) { 
-        	    final int num = rng.nextInt();
-        	    System.out.println(num);
-        	    res.setText("Result: " + num);
-            }
-        });
+        write.addActionListener(e -> res.setText(String.valueOf(rng.nextInt())));
     }
 
     private void display() {
