@@ -7,21 +7,20 @@ import java.util.List;
  * A controller that prints strings and has memory of the strings it printed.
  */
 public interface Controller {
-	void setNextString(final String next);
-	String getNextString(final String getNext);
-	List<String> getHistory();
-	void printCurrentOnFile(final File f) throws IllegalStateException;
-	void printCurrentOnStdOut() throws IllegalStateException;
-	
+    void setNextString(String next);
+
+    String getNextString();
+
+    List<String> getHistory();
+
+    void printCurrent();
     /*
      * This interface must model a simple controller responsible of I/O access. It
      * considers only the standard output, and it is able to print on it.
      * 
      * Write the interface and implement it in a class in such a way that it
-     * includes:
-     * 
-     * 1) A method for setting the next string to print. Null values are not
-     * acceptable, and an exception should be produced
+     * includes: s 1) A method for setting the next string to print. Null values are
+     * not acceptable, and an exception should be produced
      * 
      * 2) A method for getting the next string to print
      * 
@@ -32,5 +31,4 @@ public interface Controller {
      * an IllegalStateException should be thrown
      * 
      */
-
 }
