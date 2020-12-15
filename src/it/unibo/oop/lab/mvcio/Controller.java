@@ -1,10 +1,40 @@
 package it.unibo.oop.lab.mvcio;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
+
 /**
  * 
  */
 public class Controller {
 
+    private File file;
+    private String path;
+    private static final String D_PATH = System.getProperty("user.home") + System.getProperty("file.separator") + "user.txt"; 
+ 
+    public Controller() {
+        super();
+        this.file = new File(D_PATH);
+        this.path = file.getAbsolutePath();
+    }
+    
+    public void setFile(final File newFile) {
+        this.file = newFile; 
+    }
+
+    public File getFile() {
+        return this.file;
+    }
+
+    public void writeOnFile(final String line) {
+        try (PrintStream ps = new PrintStream(this.file)) {
+            ps.print(line);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+    
     /*
      * This class must implement a simple controller responsible of I/O access. It
      * considers a single file at a time, and it is able to serialize objects in it.
